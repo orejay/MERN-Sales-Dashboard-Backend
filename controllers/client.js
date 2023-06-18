@@ -3,6 +3,7 @@ import ProductStat from "../models/ProductStat.js";
 import Transaction from "../models/Transaction.js";
 import User from "../models/user.js";
 import getCountryIso3 from "country-iso-2-to-3";
+import { StatusCodes } from "http-status-codes";
 
 export const getProducts = async (req, res) => {
   try {
@@ -19,18 +20,18 @@ export const getProducts = async (req, res) => {
         };
       })
     );
-    res.status(200).json(productsWithStat);
+    res.status(StatusCodes.OK).json(productsWithStat);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };
 
 export const getCustomers = async (req, res) => {
   try {
     const customers = await User.find({ role: "user" }).select("-password");
-    res.status(200).json(customers);
+    res.status(StatusCodes.OK).json(customers);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };
 
@@ -69,12 +70,12 @@ export const getTransactions = async (req, res) => {
 
     console.log("total", total);
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       transactions,
       total,
     });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };
 
@@ -97,8 +98,8 @@ export const getGeography = async (req, res) => {
       }
     );
 
-    res.status(200).json(formattedLocations);
+    res.status(StatusCodes.OK).json(formattedLocations);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };

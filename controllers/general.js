@@ -6,9 +6,9 @@ export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
-    res.status(200).json(user);
+    res.status(StatusCodes.OK).json(user);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };
 
@@ -43,7 +43,7 @@ export const getDashboardStats = async (req, res) => {
       return date === currentDay;
     });
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       totalCustomers,
       yearlyTotalSoldUnits,
       yearlySalesTotal,
@@ -54,6 +54,6 @@ export const getDashboardStats = async (req, res) => {
       transactions,
     });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };

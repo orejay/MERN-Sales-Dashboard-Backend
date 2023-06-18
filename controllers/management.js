@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 import User from "../models/user.js";
-import AffiliateStat from "../models/AffiliateStat.js";
 import Transaction from "../models/Transaction.js";
 
 export const getAdmins = async (req, res) => {
   try {
     const admins = await User.find({ role: "admin" }).select("-password");
 
-    res.status(200).json(admins);
+    res.status(StatusCodes.OK).json(admins);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };
 
@@ -39,9 +38,9 @@ export const getUserPerformance = async (req, res) => {
     );
 
     res
-      .status(200)
+      .status(StatusCodes.OK)
       .json({ user: userWithStats[0], sales: filteredSaleTransactions });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
   }
 };
